@@ -1,7 +1,7 @@
 # PhotoShare
 
 
-## Developers :octocat:
+## Developers:
 
 <div align="">
   <a href="https://github.com/Serhii-Olkhovskyi">Serhii Olkhovskyi</a><br>
