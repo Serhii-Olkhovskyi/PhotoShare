@@ -22,8 +22,9 @@
 ## Developers
 
 <div align="">
+  <a href="https://github.com/Gaveloshpom">Ruslan Skytsko</a><br>
   <a href="https://github.com/Serhii-Olkhovskyi">Serhii Olkhovskyi</a><br>
-  <a href="https://github.com/Gaveloshpom">Skitsko Ruslan</a><br>
+  <a href="https://github.com/K2-TyMaH">Vladyslav Chaban</a><br>
 </div>
 
 
