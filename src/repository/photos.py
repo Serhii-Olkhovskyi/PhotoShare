@@ -23,17 +23,17 @@ async def get_photos_by_id(photo_id: int, db: Session) -> Photo:
     #                                                                       Photo.email == information, )).all()
 
 
-async def create_photo(body: PhotoModel, url, db: Session) -> Photo:
-    contact = Photo(
+async def create_photo(title: str, description: str, url, db: Session) -> Photo:
+    photo = Photo(
         photo_url=url,
-        title=body.title,
-        description=body.description,
+        title=title,
+        description=description,
         # user_id=user.id
     )
-    db.add(contact)
+    db.add(photo)
     db.commit()
-    db.refresh(contact)
-    return contact
+    db.refresh(photo)
+    return photo
 
 
 async def update_photo(photo_id: int, body: PhotoUpdate, db: Session) -> Photo | None:

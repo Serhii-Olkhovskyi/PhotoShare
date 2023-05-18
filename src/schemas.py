@@ -15,26 +15,28 @@ class TagResponse(TagModel):
 
 
 class PhotoBase(BaseModel):
-    photo_url: str = Field(max_length=400, default=None)
-    qr_code_url: str = Field(max_length=500, default=None)
+    # photo_url: str = Field(max_length=400, default=None)
+    # qr_code_url: str = Field(max_length=500, default=None)
     title: str = Field(max_length=69)
     description: str = Field(max_length=777)
 
 
 class PhotoModel(PhotoBase):
-    tags: List[int]
 
-    @validator("tags")
-    def validate_tags(cls, tags):
-        if len(tags) > 5:
-            raise ValueError("Too many tags (MAX 5 tags)")
-        return tags
+    pass
+    # tags: List[int]
+    #
+    # @validator("tags")
+    # def validate_tags(cls, tags):
+    #     if len(tags) > 5:
+    #         raise ValueError("Too many tags (MAX 5 tags)")
+    #     return tags
 
 
 class PhotoUpdate(BaseModel):
     title: str = Field(max_length=69)
     description: str = Field(max_length=777)
-    tags: List[int]
+#    tags: List[int]
 
 
 class PhotoTitleUpdate(BaseModel):
@@ -49,7 +51,7 @@ class PhotoResponse(PhotoBase):
     id: int
     created_at: datetime
     updated_at: datetime
-    tags: List[TagResponse]
+#    tags: List[TagResponse]
 
     class Config:
         orm_mode = True
