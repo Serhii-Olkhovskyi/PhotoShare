@@ -12,7 +12,7 @@ class Photo(Base):
 
     id = Column(Integer, primary_key=True)
     photo_url = Column(String(400))
-    qr_code_url = Column(Text)
+    qr_code_url = Column(Text, nullable=True)
     title = Column(String(69), nullable=True)
     description = Column(String(777), nullable=True)
     #tags = ...

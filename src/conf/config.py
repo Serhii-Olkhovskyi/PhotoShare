@@ -1,4 +1,5 @@
 from pydantic import BaseSettings
+import cloudinary
 
 
 class Settings(BaseSettings):
@@ -11,7 +12,7 @@ class Settings(BaseSettings):
     # mail_port: int = 465
     # mail_server: str = 'smtp.meta.ua'
     redis_host: str = 'localhost'
-    redis_port: int = 6379
+    redis_port: int = 6366
 
     cloudinary_name: str = 'name'
     cloudinary_api_key: int = 991546536478543
@@ -23,3 +24,13 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+
+
+def cloudinary_config():
+    cloudinary.config(
+             cloud_name=settings.cloudinary_name,
+             api_key=settings.cloudinary_api_key,
+             api_secret=settings.cloudinary_api_secret,
+             secure=True
+         )
+
