@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, validator, EmailStr
 
 
 class TagModel(BaseModel):
@@ -22,7 +22,6 @@ class PhotoBase(BaseModel):
 
 
 class PhotoModel(PhotoBase):
-
     pass
     # tags: List[int]
     #
@@ -36,6 +35,8 @@ class PhotoModel(PhotoBase):
 class PhotoUpdate(BaseModel):
     title: str = Field(max_length=69)
     description: str = Field(max_length=777)
+
+
 #    tags: List[int]
 
 
@@ -51,7 +52,25 @@ class PhotoResponse(PhotoBase):
     id: int
     created_at: datetime
     updated_at: datetime
-#    tags: List[TagResponse]
+
+    #    tags: List[TagResponse]
+
+    class Config:
+        orm_mode = True
+
+
+class UserModel(BaseModel):
+    username: str = Field(min_length=6, max_length=12)
+    email: EmailStr
+    password = Field(min_length=6, max_length=8)
+
+
+class UserResponse(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+    avatar: str
+    roles: str
 
     class Config:
         orm_mode = True
