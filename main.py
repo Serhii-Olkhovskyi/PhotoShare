@@ -6,7 +6,7 @@ from src.database.db import get_db
 
 import redis.asyncio as redis
 from fastapi_limiter import FastAPILimiter
-from src.routes import photos
+from src.routes import photos, auth
 from src.conf.config import settings
 
 app = FastAPI()
@@ -37,3 +37,6 @@ def healthchecker(db: Session = Depends(get_db)):
     except Exception as e:
         print(e)
         raise HTTPException(status_code=500, detail="Error connecting to the database")
+
+
+app.include_router(auth.router, prefix='/api')
