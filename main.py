@@ -2,12 +2,14 @@ from fastapi import FastAPI
 import redis.asyncio as redis
 from fastapi_limiter import FastAPILimiter
 
-from src.routes import photos
+from src.routes import photos, photo_transformer
 from src.conf.config import settings
 
 app = FastAPI()
 
 app.include_router(photos.router, prefix='/api')
+app.include_router(photo_transformer.router, prefix='/api')
+
 
 @app.on_event("startup")
 async def startup():
