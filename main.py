@@ -1,7 +1,7 @@
 from fastapi import FastAPI
+
 import redis.asyncio as redis
 from fastapi_limiter import FastAPILimiter
-
 from src.routes import photos
 from src.conf.config import settings
 
