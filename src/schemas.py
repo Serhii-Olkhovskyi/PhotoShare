@@ -2,6 +2,8 @@ from datetime import datetime
 from typing import List, Optional
 from pydantic import BaseModel, Field, validator, EmailStr
 
+from src.database.models import Role
+
 
 class TagModel(BaseModel):
     name: str = Field(max_length=25)
@@ -70,7 +72,7 @@ class UserResponse(BaseModel):
     username: str
     email: EmailStr
     avatar: str
-    roles: str
+    roles: Role
 
     class Config:
         orm_mode = True
