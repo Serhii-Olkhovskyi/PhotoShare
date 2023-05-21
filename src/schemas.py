@@ -3,11 +3,11 @@ from typing import List, Optional
 from pydantic import BaseModel, Field, validator, EmailStr
 
 
-class TagModel(BaseModel):
-    name: str = Field(max_length=25)
+class TagBase(BaseModel):
+    title: str = Field(max_length=25)
 
 
-class TagResponse(TagModel):
+class TagResponse(TagBase):
     id: int
 
     class Config:

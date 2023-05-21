@@ -1,10 +1,18 @@
 import enum
-from sqlalchemy import Column, Integer, String, func, ForeignKey, Boolean, Text, Enum
+from sqlalchemy import Column, Integer, String, func, ForeignKey, Boolean, Text, Enum, Table
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.sqltypes import DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
+
+post_m2m_tag = Table(
+    "post_m2m_tag",
+    Base.metadata,
+    Column("id", Integer, primary_key=True),
+    Column("photo_id", Integer, ForeignKey("photos.id", ondelete="CASCADE")),
+    Column("tag_id", Integer, ForeignKey("tags.id", ondelete="CASCADE")),
+)
 
 
 class Role(enum.Enum):
@@ -21,7 +29,7 @@ class Photo(Base):
     qr_code_url = Column(Text, nullable=True)
     title = Column(String(69), nullable=True)
     description = Column(String(777), nullable=True)
-    # tags = ...
+    tags = relationship('Tag', secondary=post_m2m_tag, backref='photos')
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now())
 
@@ -39,5 +47,14 @@ class User(Base):
     roles = Column('roles', Enum(Role), default=Role.user)
     created_at = Column('created_at', DateTime, default=func.now())
     refresh_token = Column(String(255), nullable=True)
-    created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
+
+
+class Tag(Base):
+    __tablename__ = 'tags'
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String(50), nullable=False, unique=True)
+    created_at = Column(DateTime, default=func.now())
+    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), default=None)
+    user = relationship('User', backref="tags")

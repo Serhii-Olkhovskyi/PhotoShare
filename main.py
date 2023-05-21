@@ -6,12 +6,13 @@ from src.database.db import get_db
 
 import redis.asyncio as redis
 from fastapi_limiter import FastAPILimiter
-from src.routes import photos, auth
+from src.routes import photos, auth, tags
 from src.conf.config import settings
 
 app = FastAPI()
 
 app.include_router(photos.router, prefix='/api')
+app.include_router(tags.router, prefix='/api')
 
 
 @app.on_event("startup")
