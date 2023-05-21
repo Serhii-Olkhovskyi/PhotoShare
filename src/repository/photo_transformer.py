@@ -1,4 +1,3 @@
-import base64
 import cloudinary
 import qrcode
 import io
@@ -71,16 +70,24 @@ async def transformer(photo_id: int, body: TransformerModel, db: Session) -> Pho
         return photo
 
 
-def show_qr_code(photo_id: int, db: Session) -> str | None:
-
-    #photo = db.query(Photo).filter(Photo.user_id == user.id, Photo.id == photo_id).first()
+def show_qr_code(photo_id: int, db: Session):
     photo = db.query(Photo).filter(Photo.id == photo_id).first()
     if photo:
         if photo.qr_code_url:
-            qr_image = qrcode.make(photo.qr_code_url)
-            cloudinary_config()
-            qr = cloudinary.uploader.upload(qr_image, public_id='qr_code', overwrite=True)
-            qr_url = cloudinary.CloudinaryImage(f'PhotoShareApp/"current_user.username"') \
-                .build_url(width=250, height=250, crop='fill', version=qr.get('version'))
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_L,
+                box_size=3,
+                border=4,
+            )
+            qr.add_data(photo.qr_code_url)
+            qr.make(fit=True)
 
-            return qr_url
+            img = qr.make_image(fill_color="black", back_color="white")
+
+            output = io.BytesIO()
+            img.save(output)
+            output.seek(0)
+
+            return output
+

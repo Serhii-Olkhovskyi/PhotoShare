@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
+from starlette.responses import StreamingResponse
 
 from src.database.db import get_db
 #from src.database.models import User
@@ -12,7 +13,7 @@ router = APIRouter(prefix='/transformer', tags=["transformer"])
 
 
 @router.patch("/{photo_id}", response_model=PhotoResponse, status_code=status.HTTP_200_OK)
-async def photo_transformer(photo_id: int, body: TransformerModel, db: Session = Depends(get_db),):
+async def photo_transform(photo_id: int, body: TransformerModel, db: Session = Depends(get_db),):
                           #current_user: User = Depends(auth_service.get_current_user)):
 
     photo = await transformer(photo_id, body, db)
@@ -21,11 +22,11 @@ async def photo_transformer(photo_id: int, body: TransformerModel, db: Session =
     return photo
 
 
-@router.post("/qr_code/{photo_id}", status_code=status.HTTP_200_OK)
-def show_qr_code(photo_id: int, db: Session = Depends(get_db),):
+@router.post("/qr_code/{photo_id}", status_code=status.HTTP_201_CREATED)
+def show_qr(photo_id: int, db: Session = Depends(get_db),):
                   #current_user: User = Depends(auth_service.get_current_user)):
 
     photo = show_qr_code(photo_id, db)
     if photo is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Image not found')
-    return photo
+    return StreamingResponse(photo, media_type="image/png", status_code=status.HTTP_201_CREATED)
