@@ -12,13 +12,16 @@ uvicorn = "^0.22.0"
 sqlalchemy = "^2.0.13"
 psycopg2-binary = "^2.9.6"
 alembic = "^1.10.4"
-pydantic = {extras = ["dotenv"], version = "^1.10.7"}
+pydantic = {extras = ["dotenv", "email"], version = "^1.10.7"}
 cloudinary = "^1.33.0"
 fastapi-limiter = "^0.1.5"
 python-multipart = "^0.0.6"
 redis = "^4.5.5"
 qrcode = "^7.4.2"
 pillow = "^9.5.0"
+python-jose = "^3.3.0"
+passlib = "^1.7.4"
+libgravatar = "^1.0.4"
 
 
 [build-system]
