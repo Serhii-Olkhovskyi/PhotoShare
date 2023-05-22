@@ -33,8 +33,8 @@ class Photo(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime, default=func.now())
 
-    # user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), default=None)
-    # user = relationship('User', backref="photos")
+    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), default=None)
+    user = relationship('User', backref="photos")
 
 
 class User(Base):
