@@ -18,7 +18,7 @@ router = APIRouter(prefix='/tags', tags=["tags"])
 
 @router.post("/new/", response_model=TagResponse)
 async def create_tag(body: TagBase, current_user: User = Depends(auth_service.get_current_user), db: Session = Depends(get_db)):
-    return await repository_create_tag(body, db, current_user)
+    return await repository_create_tag(body, current_user, db)
 
 
 @router.put("/update_tag/{tag_id}", response_model=TagResponse, dependencies=[Depends(allowed_edit_hashtag)])

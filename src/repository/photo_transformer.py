@@ -5,15 +5,13 @@ import cloudinary.uploader
 
 from sqlalchemy.orm import Session
 
-from src.database.models import Photo
+from src.database.models import Photo, User
 from src.conf.config import cloudinary_config
 from src.schemas_of_transformation import TransformerModel
 
 
-async def transformer(photo_id: int, body: TransformerModel, db: Session) -> Photo | None:
-
-    #post = db.query(Photo).filter(Photo.user_id == user.id, Photo.id == photo_id).first()
-    photo = db.query(Photo).filter(Photo.id == photo_id).first()
+async def transformer(photo_id: int, body: TransformerModel, user: User, db: Session) -> Photo | None:
+    photo = db.query(Photo).filter(Photo.user_id == user.id, Photo.id == photo_id).first()
     if photo:
         transformation = []
 
@@ -70,8 +68,8 @@ async def transformer(photo_id: int, body: TransformerModel, db: Session) -> Pho
         return photo
 
 
-def show_qr_code(photo_id: int, db: Session):
-    photo = db.query(Photo).filter(Photo.id == photo_id).first()
+def show_qr_code(photo_id: int, user: User, db: Session):
+    photo = db.query(Photo).filter(Photo.user_id == user.id, Photo.id == photo_id).first()
     if photo:
         if photo.qr_code_url:
             qr = qrcode.QRCode(
@@ -90,4 +88,3 @@ def show_qr_code(photo_id: int, db: Session):
             output.seek(0)
 
             return output
-
