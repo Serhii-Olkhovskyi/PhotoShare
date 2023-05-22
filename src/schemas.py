@@ -68,7 +68,7 @@ class UserModel(BaseModel):
 
 
 class UserResponse(BaseModel):
-    id: int
+    id: int = 1
     username: str
     email: EmailStr
     avatar: str
