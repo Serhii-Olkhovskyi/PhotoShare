@@ -71,8 +71,9 @@ class UserResponse(BaseModel):
     id: int
     username: str
     email: EmailStr
-    avatar: str
+    avatar: Optional[str]
     roles: Role
+    created_at: datetime
 
     class Config:
         orm_mode = True
@@ -83,3 +84,22 @@ class TokenModel(BaseModel):
     refresh_token: str
     token_type: str = "bearer"
 
+
+class UserProfileModel(BaseModel):
+    username: str
+    email: EmailStr
+    avatar: Optional[str]
+    post_count: Optional[int]
+    comment_count: Optional[int]
+    rates_count: Optional[int]
+    is_active: Optional[bool]
+    created_at: datetime
+
+
+class RequestEmail(BaseModel):
+    email: EmailStr
+
+
+class RequestRole(BaseModel):
+    email: EmailStr
+    roles: Role

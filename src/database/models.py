@@ -45,6 +45,7 @@ class User(Base):
     password = Column(String(255), nullable=False)
     avatar = Column(String(255), nullable=True)
     roles = Column('roles', Enum(Role), default=Role.user)
+    is_active = Column(Boolean, default=True)
     created_at = Column('created_at', DateTime, default=func.now())
     refresh_token = Column(String(255), nullable=True)
     updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
