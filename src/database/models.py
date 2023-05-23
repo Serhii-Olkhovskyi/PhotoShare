@@ -16,9 +16,9 @@ post_m2m_tag = Table(
 
 
 class Role(enum.Enum):
-    admin: str = "admin"
-    moderator: str = "moderator"
-    user: str = "user"
+    admin = "admin"
+    moderator = "moderator"
+    user = "user"
 
 
 class Photo(Base):
@@ -58,3 +58,17 @@ class Tag(Base):
     created_at = Column(DateTime, default=func.now())
     user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), default=None)
     user = relationship('User', backref="tags")
+
+
+class Comment(Base):
+    __tablename__ = 'comments'
+
+    id = Column(Integer, primary_key=True)
+    text = Column(Text, nullable=False)
+    created_at = Column(DateTime, default=func.now())
+    updated_at = Column(DateTime, default=None, onupdate=func.now())
+    user_id = Column('user_id', ForeignKey('users.id', ondelete='CASCADE'), default=None)
+    photo_id = Column('photo_id', ForeignKey('photos.id', ondelete='CASCADE'), default=None)
+
+    user = relationship('User', backref="comments")
+    photo = relationship('Photo', backref="comments")
