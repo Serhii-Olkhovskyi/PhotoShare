@@ -16,7 +16,7 @@ async def create_comment(photo_id: int, body: CommentBase, db: Session, user: Us
 async def edit_comment(comment_id: int, body: CommentBase, db: Session, user: User) -> Comment | None:
     comment = db.query(Comment).filter(Comment.id == comment_id).first()
     if comment:
-        if user.role in [Role.admin, Role.moderator] or comment.user_id == user.id:
+        if user.roles in [Role.admin, Role.moderator] or comment.user_id == user.id:
             comment.text = body.text
             comment.updated_at = func.now()
             db.commit()
