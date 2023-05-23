@@ -34,7 +34,7 @@ async def get_users(db: Session = Depends(get_db)):
     return db.query(User).all()
 
 
-@router.get("/my/", response_model=UserResponse, tags=['users'])
+@router.get("/my/", response_model=UserResponse)
 async def info_my_profile(current_user: User = Depends(auth_service.get_current_user),
                           db: Session = Depends(get_db)):
     """
