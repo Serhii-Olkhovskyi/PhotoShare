@@ -10,6 +10,7 @@ Welcome to PhotoShare's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+
 REST API main
 ===================
 .. automodule:: main
@@ -35,7 +36,7 @@ REST API repository Tags
 
 
 REST API repository Users
-=========================
+==========================
 .. automodule:: src.repository.users
   :members:
   :undoc-members:
@@ -113,13 +114,6 @@ REST API service Auth
   :undoc-members:
   :show-inheritance:
 
-
-REST API service Roles
-=========================
-.. automodule:: src.services.roles
-  :members:
-  :undoc-members:
-  :show-inheritance:
 
 Indices and tables
 ==================
