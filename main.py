@@ -8,6 +8,7 @@ import redis.asyncio as redis
 from fastapi_limiter import FastAPILimiter
 
 from src.routes import photos, photo_transformer, auth, tags, users
+from src.routes import photos, photo_transformer, auth, tags, comments
 
 from src.conf.config import settings
 
@@ -17,6 +18,7 @@ app.include_router(users.router, prefix='/api')
 app.include_router(photos.router, prefix='/api')
 app.include_router(tags.router, prefix='/api')
 app.include_router(photo_transformer.router, prefix='/api')
+app.include_router(comments.router, prefix='/api')
 
 
 @app.on_event("startup")
