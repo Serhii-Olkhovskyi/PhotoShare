@@ -4,6 +4,7 @@ import io
 import cloudinary.uploader
 
 from sqlalchemy.orm import Session
+from sqlalchemy import and_
 
 from src.database.models import Photo, User
 from src.conf.config import cloudinary_config
@@ -11,7 +12,7 @@ from src.schemas_of_transformation import TransformerModel
 
 
 async def transformer(photo_id: int, body: TransformerModel, user: User, db: Session) -> Photo | None:
-    photo = db.query(Photo).filter(Photo.user_id == user.id, Photo.id == photo_id).first()
+    photo = db.query(Photo).filter(and_(Photo.id == photo_id, Photo.user_id == user.id)).first()
     if photo:
         transformation = []
 
@@ -59,7 +60,7 @@ async def transformer(photo_id: int, body: TransformerModel, user: User, db: Ses
 
         if transformation:
             cloudinary_config()
-            url = cloudinary.CloudinaryImage(f'PhotoShareApp/"current_user.username"').build_url(
+            url = cloudinary.CloudinaryImage(f'PhotoShareApp/{user.username}').build_url(
                 transformation=transformation
             )
             photo.qr_code_url = url
@@ -69,7 +70,7 @@ async def transformer(photo_id: int, body: TransformerModel, user: User, db: Ses
 
 
 def show_qr_code(photo_id: int, user: User, db: Session):
-    photo = db.query(Photo).filter(Photo.user_id == user.id, Photo.id == photo_id).first()
+    photo = db.query(Photo).filter(and_(Photo.id == photo_id, Photo.user_id == user.id)).first()
     if photo:
         if photo.qr_code_url:
             qr = qrcode.QRCode(

@@ -1,7 +1,6 @@
 from typing import List
 
 import cloudinary
-from sqlalchemy import func
 
 from sqlalchemy.orm import Session
 from libgravatar import Gravatar
@@ -12,10 +11,26 @@ from src.schemas import UserModel, UserProfileModel
 
 
 async def get_user_by_email(email: str, db: Session) -> User | None:
+    """
+    The get_user_by_email function takes in an email and a database session,
+    and returns the user with that email if it exists. If no such user exists,
+    it returns None.
+
+    :param email: str: Filter the database by email
+    :param db: Session: Pass a database session to the function
+    :return: A user object or none
+    """
     return db.query(User).filter_by(email=email).first()
 
 
 async def create_user(body: UserModel, db: Session):
+    """
+    The create_user function creates a new user in the database.
+
+    :param body: UserModel: Get the data from the request body
+    :param db: Session: Access the database
+    :return: A user object
+    """
     g = Gravatar(body.email)
     g.get_image()
 
@@ -27,6 +42,18 @@ async def create_user(body: UserModel, db: Session):
 
 
 async def update_token(user: User, refresh_token, db: Session):
+    """
+    The update_token function updates the refresh token for a user in the database.
+        Args:
+            user (User): The User object to update.
+            refresh_token (str): The new refresh token to store in the database.
+            db (Session): A connection to our Postgres database.
+
+    :param user: User: Pass the user object to the function
+    :param refresh_token: Update the user's refresh token in the database
+    :param db: Session: Pass the database session to the function
+    :return: A user object
+    """
     user.refresh_token = refresh_token
     db.commit()
 
