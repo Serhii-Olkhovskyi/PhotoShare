@@ -25,6 +25,9 @@ libgravatar = "^1.0.4"
 bcrypt = "^4.0.1"
 
 
+[tool.poetry.group.dev.dependencies]
+sphinx = "^7.0.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

@@ -27,6 +27,12 @@ settings = Settings()
 
 
 def cloudinary_config():
+    """
+    The cloudinary_config function is used to configure the cloudinary library with your Cloudinary account's details.
+    This function should be called before using any of the other cloudinary functions.
+
+    :return: The cloudinary configuration
+    """
     cloudinary.config(
              cloud_name=settings.cloudinary_name,
              api_key=settings.cloudinary_api_key,
